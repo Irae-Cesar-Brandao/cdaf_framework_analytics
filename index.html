@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CDAF Framework</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;color:#fff;background:linear-gradient(270deg,#0f2027,#203a43,#2c5364);background-size:600% 600%;animation:gradient 15s ease infinite}
+@keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.container{max-width:1100px;margin:auto;padding:20px}
+.card{background:rgba(255,255,255,.08);padding:15px;border-radius:12px;margin-bottom:15px}
+input,textarea{width:100%;margin:5px 0;padding:8px;border-radius:6px;border:none}
+button{margin:5px;padding:10px;border:none;border-radius:8px;cursor:pointer}
+button:hover{opacity:.85}
+.btn-add{background:#00c9ff}.btn-export{background:#00ff95}.btn-clear{background:#ff4d4d}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th,.table td{border:1px solid #ccc;padding:6px;font-size:12px}
+.table tr:hover{background:rgba(255,255,255,.1);cursor:pointer}
+canvas{background:#fff;border-radius:10px;margin-top:10px}
+.legend{font-size:12px;margin-top:6px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.badge{display:inline-block;padding:2px 6px;border-radius:6px;background:#000;color:#fff;margin-left:6px}
+</style>
+</head>
+<body>
+<div class="container">
+<div style="margin-bottom:15px;">
+  
+  <h1 style="text-align:center; margin-bottom:5px;">
+    Cognitive Delegation Analysis Framework (CDAF)
+  </h1>
+  
+  <div style="text-align:right; font-size:13px; color:#ccc; margin-bottom:10px;">
+    <strong>Autor:</strong> Iraê César Brandão <br>
+    <strong>Data pub.:</strong> 18 Mar. 2026.
+  </div>
+
+  <p style="font-size:13px; color:#ddd; text-align:justify;">
+    Este framework foi desenvolvido para analisar, de forma estruturada, os efeitos da mediação da Inteligência Artificial na produção científica, considerando dimensões como autonomia cognitiva, integridade epistêmica e lacuna de compreensão.
+  </p>
+
+</div>
+
+<div class="card">
+<input id="date" type="date">
+<input id="publication" placeholder="Publicação">
+<textarea id="problem" placeholder="Problemática"></textarea>
+<label>Autonomia Cognitiva (1-5)</label>
+<input id="autonomy" type="number" min="1" max="5" value="1">
+<label>Integridade Epistêmica (1-5)</label>
+<input id="integrity" type="number" min="1" max="5" value="1">
+<label>Lacuna de Compreensão (1-5)</label>
+<input id="understanding" type="number" min="1" max="5" value="1">
+<textarea id="notes" placeholder="Observações"></textarea>
+<button class="btn-add" onclick="addData()">Adicionar</button>
+</div>
+
+<div class="card">
+<button class="btn-export" onclick="exportCSV()">Exportar CSV</button>
+<button class="btn-clear" onclick="clearData()">Limpar</button>
+</div>
+
+<div class="row">
+  <div>
+    <table class="table" id="table">
+      <thead>
+        <tr>
+          <th>#</th><th>Data</th><th>Publicação</th><th>A</th><th>I</th><th>L</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="legend">Clique na linha para selecionar no radar <span class="badge">A=Autonomia I=Integridade L=Lacuna</span></div>
+  </div>
+  <div>
+    <canvas id="radar" width="400" height="400"></canvas>
+    <div class="legend">Radar do item selecionado (ou média se nenhum selecionado)</div>
+  </div>
+</div>
+
+<canvas id="bars" width="1000" height="320"></canvas>
+<div class="legend">🔵 Autonomia | 🟢 Integridade | 🔴 Lacuna</div>
+
+
+<!--  ORIENTAÇÕES DE UTILIZAÇÃO DO FRAMEWORK  -->
+
+<div class="card">
+  <h3>Como Utilizar o Framework CDAF</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Etapa</th>
+        <th>Ação</th>
+        <th>Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Inserir Dados do Artigo</td>
+        <td>Preencha a data, o nome da publicação e a problemática principal abordada no artigo.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Avaliar Dimensões</td>
+        <td>Atribua valores de 1 a 5 para Autonomia Cognitiva, Integridade Epistêmica e Lacuna de Compreensão com base na análise realizada.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Adicionar Observações</td>
+        <td>Inclua observações qualitativas para justificar as pontuações atribuídas ou destacar aspectos relevantes.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Salvar Registro</td>
+        <td>Clique em “Adicionar” para armazenar a análise. Os dados são salvos automaticamente no navegador.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Comparar Artigos</td>
+        <td>Utilize o gráfico de barras para identificar padrões, semelhanças e diferenças entre múltiplas análises.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Selecionar para Análise Detalhada</td>
+        <td>Clique em uma linha da tabela para visualizar o artigo específico no gráfico radar.</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Interpretar Resultados</td>
+        <td>Analise as relações entre as dimensões para identificar dependência cognitiva, coerência ou lacunas de compreensão.</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Exportar Dados</td>
+        <td>Baixe os resultados em formato CSV para análises adicionais ou inclusão em trabalhos acadêmicos.</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Reiniciar Análise</td>
+        <td>Utilize o botão de limpeza para iniciar um novo conjunto de dados quando necessário.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:10px; font-size:13px;">
+    <strong>Observação:</strong> As pontuações devem ser atribuídas com base em leitura crítica e alinhamento teórico. O framework possui caráter interpretativo e foi concebido para apoiar análises comparativas estruturadas, não para produzir medições absolutas.
+  </p>
+</div>
+
+
+
+</div>
+
+
+
+
+<script>
+let data = JSON.parse(localStorage.getItem('cdaf')||'[]');
+let selectedIndex = null;
+
+function save(){localStorage.setItem('cdaf',JSON.stringify(data));render();}
+
+function addData(){
+  const item={
+    date:date.value,
+    publication:publication.value,
+    problem:problem.value,
+    autonomy:+autonomy.value,
+    integrity:+integrity.value,
+    understanding:+understanding.value,
+    notes:notes.value
+  };
+  data.push(item);
+  selectedIndex = data.length-1;
+  save();
+}
+
+function clearData(){data=[];selectedIndex=null;save();}
+
+function exportCSV(){
+  let csv='date,publication,autonomy,integrity,understanding\n';
+  data.forEach(d=>{csv+=`${d.date},${d.publication},${d.autonomy},${d.integrity},${d.understanding}\n`});
+  let blob=new Blob([csv]);
+  let a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='cdaf.csv';
+  a.click();
+}
+
+function render(){
+  const tbody=document.querySelector('#table tbody');
+  tbody.innerHTML='';
+  data.forEach((d,i)=>{
+    const tr=document.createElement('tr');
+    if(i===selectedIndex) tr.style.outline='2px solid #00c9ff';
+    tr.innerHTML=`<td>${i+1}</td><td>${d.date||''}</td><td>${d.publication||''}</td><td>${d.autonomy}</td><td>${d.integrity}</td><td>${d.understanding}</td>`;
+    tr.onclick=()=>{selectedIndex=i; render();};
+    tbody.appendChild(tr);
+  });
+  drawBars();
+  drawRadar();
+}
+
+function drawBars(){
+  const c=document.getElementById('bars');
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  // eixo Y
+  ctx.strokeStyle='#000';
+  ctx.beginPath();ctx.moveTo(40,10);ctx.lineTo(40,300);ctx.stroke();
+  for(let i=1;i<=5;i++){let y=300-i*50;ctx.fillText(i,10,y+4);ctx.beginPath();ctx.moveTo(35,y);ctx.lineTo(40,y);ctx.stroke();}
+  let x=60; const gap=60; const bw=12; const colors=['blue','green','red'];
+  data.forEach((d,idx)=>{
+    const vals=[d.autonomy,d.integrity,d.understanding];
+    vals.forEach((v,i)=>{
+      const h=v*50; const y=300-h; ctx.fillStyle=colors[i]; ctx.fillRect(x+i*(bw+4),y,bw,h);
+    });
+    ctx.fillStyle='#000'; ctx.fillText(idx+1,x,315);
+    if(idx===selectedIndex){ ctx.strokeStyle='#00c9ff'; ctx.strokeRect(x-6,10, (bw+4)*3+8, 290); }
+    x+=gap;
+  });
+}
+
+function drawRadar(){
+  const c=document.getElementById('radar');
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  const cx=200, cy=200, max=120;
+  // eixos 3
+  for(let i=0;i<3;i++){
+    const ang=(Math.PI*2/3)*i - Math.PI/2;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(ang)*max, cy+Math.sin(ang)*max); ctx.stroke();
+  }
+  // círculos de escala
+  for(let r=1;r<=5;r++){
+    const rr = r/5*max;
+    ctx.beginPath();
+    for(let i=0;i<3;i++){
+      const ang=(Math.PI*2/3)*i - Math.PI/2;
+      const x=cx+Math.cos(ang)*rr, y=cy+Math.sin(ang)*rr;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.closePath(); ctx.stroke();
+  }
+
+  let values;
+  if(selectedIndex!=null){
+    const d=data[selectedIndex];
+    values=[d.autonomy,d.integrity,d.understanding];
+  } else if(data.length){
+    const avg={a:0,i:0,l:0};
+    data.forEach(d=>{avg.a+=d.autonomy; avg.i+=d.integrity; avg.l+=d.understanding});
+    values=[avg.a/data.length, avg.i/data.length, avg.l/data.length];
+  } else { return; }
+
+  ctx.beginPath();
+  values.forEach((v,i)=>{
+    const ang=(Math.PI*2/3)*i - Math.PI/2;
+    const r=v/5*max;
+    const x=cx+Math.cos(ang)*r, y=cy+Math.sin(ang)*r;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.closePath(); ctx.fillStyle='rgba(0,255,255,.3)'; ctx.fill(); ctx.stroke();
+
+  // rótulos
+  const labels=['Autonomia','Integridade','Lacuna'];
+  labels.forEach((t,i)=>{
+    const ang=(Math.PI*2/3)*i - Math.PI/2;
+    const x=cx+Math.cos(ang)*(max+15), y=cy+Math.sin(ang)*(max+15);
+    ctx.fillText(t,x-20,y+4);
+  });
+}
+
+render();
+</script>
+</body>
+
+<footer style="
+  margin-top:20px;
+  padding:15px;
+  text-align:center;
+  font-size:12px;
+  color:#ccc;
+  background:rgba(0,0,0,0.3);
+  border-top:1px solid rgba(255,255,255,0.1);">
+  © 2026 - Luck Way® | Desenvolvedor Iraê C. Brandão - DEV | Todos os direitos reservados
+</footer>
+</html>
