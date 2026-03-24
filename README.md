@@ -1,4 +1,5 @@
 O "Cognitive Delegation Analysis Framework (CDAF)" foi desenvolvido com o objetivo de oferecer uma abordagem estruturada para análise dos impactos da Inteligência Artificial na produção científica e nos processos de aprendizagem, sem finalidades de lucro, somente para uso acadêmico e aprendizado.
+Repositório site:  Cognitive Delegation Analysis Framework (CDAF)  https://irae-cesar-brandao.github.io/cdaf_framework_analytics/
 
 O avanço das tecnologias baseadas em IA tem ampliado significativamente a capacidade de produção textual e análise de dados. No entanto, esse cenário também levanta questões relevantes relacionadas à autonomia cognitiva, à integridade epistêmica e à profundidade da compreensão por parte dos usuários. Grande parte das discussões existentes permanece em nível teórico, muitas vezes repetindo argumentos semelhantes sem oferecer instrumentos práticos de mensuração.
 
@@ -10,4 +11,4 @@ No âmbito da pesquisa acadêmica, o CDAF oferece um instrumento replicável e a
 
 Dessa forma, o projeto não se limita a discutir o papel da IA, mas propõe uma forma concreta de analisá-lo, contribuindo para a construção de práticas acadêmicas mais críticas, transparentes e fundamentadas.
 
-Repositório site:  Cognitive Delegation Analysis Framework (CDAF)  https://irae-cesar-brandao.github.io/cdaf_framework_analytics/
+
